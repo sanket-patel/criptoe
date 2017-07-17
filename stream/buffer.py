@@ -8,12 +8,15 @@ class Buffer:
         self.size    = size
         self.frame   = frame
         self._count  = 0
-        self.create_frame()
-
+        if self.frame == None:
+            self.create_frame()
     def create_frame(self):
         #
         arr        = np.empty([self.size,1])
         self.frame = pd.DataFrame(arr, columns=['values'])
+
+    def get_frame(self):
+        return self.frame
 
     def add(self, value):
         #

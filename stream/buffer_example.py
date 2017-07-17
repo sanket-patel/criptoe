@@ -11,7 +11,7 @@ class myWebsocketClient(gdax.WebsocketClient):
         self.message_count = 0
         self.sma = bf.Buffer(5)
         self.lma = bf.Buffer(10)
-
+    
     def on_message(self, msg):
         #
         time.sleep(.5)
@@ -23,7 +23,7 @@ class myWebsocketClient(gdax.WebsocketClient):
             self.lma.add(price)
         print('sma: ', self.sma.moving_average())
         print('lma: ', self.lma.moving_average(), '\n\n')
-
+            
     def on_close(self):
         #
         print("-- Goodbye! --")
@@ -33,5 +33,6 @@ wsClient.start()
 
 while wsClient.message_count < 100:
     continue
-
+    
 wsClient.close()
+

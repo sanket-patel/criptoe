@@ -1,6 +1,7 @@
 import gdax
 import pandas as pd
 import messages
+import buffer
 
 # inherited the class
 class webclient(gdax.WebsocketClient):
@@ -19,7 +20,7 @@ class webclient(gdax.WebsocketClient):
         # adds message to dataframe, or creates dataframe if needed
         msg_type = msg['type']
 
-        if len(self.data.typedict[msg_type]) == 0:
+        if self.data.typedict[msg_type].shape[0] == 0:
             self.data.create_frame(msg_type, msg)
         else:
             self.data.typedict[msg_type] = self.data.queuer(msg, self.data.typedict[msg_type], 1000)

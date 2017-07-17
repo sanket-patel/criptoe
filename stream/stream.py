@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.animation as ani
-
+import webclient, historic_data, messages, message_buffers
 
 def create_graph(socket, msg_type):
     while len(socket.get_messages().get_frame('done')) < 5:
@@ -21,7 +21,7 @@ def create_graph(socket, msg_type):
 
 
 def main():
-    ws = webclient() # open stream
+    ws = webclient.webclient() # open stream
     ws.start()
     create_graph(ws, 'done')
     ws.close()    # close stream
