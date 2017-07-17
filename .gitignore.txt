@@ -1,0 +1,5 @@
+torbor/.elasticbeanstalk/*
+!torbor/.elasticbeanstalk/*.cfg.yml
+!torbor/.elasticbeanstalk/*.global.yml
+torbor/torbor/secret.py
+torbor/.git*
