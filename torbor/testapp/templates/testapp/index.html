@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<style media="screen">
+    .base {
+        font-family: "consolas";
+        color: #bbbbbb;
+        background-color: #1f1f1f;
+    }
+</style>
+    {% load static %}
+    <head>
+        <meta charset="utf-8">
+        <title>Hi</title>
+    </head>
+    <body class="base">
+        <p>Hello World!</p>
+        <img src="{% static 'testapp/img/slothy.jpg' %}" alt="slothy!" height="300">
+        <img src="{% static 'testapp/img/lucky.jpg' %}" alt="lucky!" height="300">
+    </body>
+</html>
