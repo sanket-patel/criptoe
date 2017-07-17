@@ -1,0 +1,25 @@
+branch-defaults:
+  default:
+    environment: criptoe-webapp-torbor
+    group_suffix: null
+  master:
+    environment: criptoe-webapp-torbor
+global:
+  application_name: criptoe-webapp
+  branch: null
+  default_ec2_keyname: eb-torbor-1
+  default_platform: Python 3.4
+  default_region: us-west-1
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: eb-cli
+  repository: null
+  sc: null
+  workspace_type: Application
+option_settings:
+  aws:elasticbeanstalk:container:python:
+    WSGIPath: torbor/wsgi.py
+  aws:elasticbeanstalk:container:python:staticfiles:
+    /static/: static/
