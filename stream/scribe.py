@@ -1,7 +1,7 @@
 import gdax
 import datetime as dt
 
-class historic_data(gdax.PublicClient):
+class scribe(gdax.PublicClient):
 
     def daterange(self, start_date, end_date):
         for n in range(int ((end_date - start_date).days + 1)):
