@@ -1,10 +1,11 @@
-import gdax, time
 import datetime as dt
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.animation as ani
-import webclient, historic_data, messages, message_buffers
+import pigeon
+import redis
+
 
 def create_graph(socket, msg_type):
     while len(socket.get_messages().get_frame('done')) < 5:
@@ -21,11 +22,16 @@ def create_graph(socket, msg_type):
 
 
 def main():
-    ws = webclient.webclient() # open stream
-    ws.start()
-    create_graph(ws, 'done')
-    ws.close()    # close stream
+    yellowbus = redis.StrictRedis()
 
+    birdy = pigeon.pigeon(yellowbus, 'BTC-USD')
+    birdy.sub(target='client')
+
+    turkey = pigeon.pigeon(yellowbus, 'BTC-USD')
+    turkey.sub(target='schoolbus')
+
+    while True:
+        turkey.get_pubsub()
 
 if __name__ == '__main__':
     main()
