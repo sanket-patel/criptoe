@@ -25,12 +25,11 @@ class pigeon(gdax.WebsocketClient):
 
     def on_message(self, msg):
         key = self.get_exchange() + '_' +  self.get_products() + '_' +  msg['type']
-        print(message)
         self.pub(msg, 'schoolbus', key)
 
     def pub(self, message, target, key=None):
         if target == 'schoolbus':
-            self.schoolbus.append(key, json.dumps(message))
+            self.schoolbus.publish(key, json.dumps(message))
         elif target == 'database':
             with connection.cursor() as cursor:
                 sql =  f'''
