@@ -1,9 +1,15 @@
 import redis
-import buffer
 import json
 import psycopg2
 import gdax
 import time
+
+
+# pigeon acts as a messenger between databases
+# like a carrier pigeon does
+#
+# can subscribe to stream from exchange or redis server,
+# and publish to either redis server or sql database (sql is not done yet)
 
 class pigeon(gdax.WebsocketClient):
     # pulls messages from 'client' and publishes to 'bus'
@@ -57,4 +63,6 @@ class pigeon(gdax.WebsocketClient):
         return ''.join(''.join(self.products).split('-')).lower()
 
     def get_pubsub(self):
-        return self.hoagie.get_message()
+        return self.hoagie.get_message(ignore_subscribe_messages=True)
+    def sublisten(self):
+        return self.hoagie.listen()
