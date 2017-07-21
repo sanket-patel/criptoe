@@ -13,16 +13,21 @@ import pprint
 
 def main():
     yellowbus = redis.StrictRedis()
-    birdy = pigeon.pigeon(yellowbus, 'BTC-USD')
+    # collects data from exchange
+    birdy = pigeon.pigeon(yellowbus, products='BTC-USD')
     birdy.sub(target='client')
+    # collects data for specific tag and gets stats on it
+    turkey = pigeon.pigeon(sbus=yellowbus)
+    turkey.sub(target='schoolbus', key='gdax_btcusd_done')
 
-    stats = census.census(yellowbus, 'gdax_btcusd_done')
-    stats.get_stats('test', ['moving_average'], .5, ma_num_msg=[10, 100, 1000])
+    turkey.get_stats(['moving_average'], .5, outkey='test', ma_num_msg=10, max_size=100)
 
-    turkey = pigeon.pigeon(yellowbus)
-    turkey.sub(target='schoolbus', key='test')
+    ear = pigeon.pigeon(yellowbus)
+    ear.sub(target='schoolbus', key='test')
+
+
     pp = pprint.PrettyPrinter(indent=4)
-    [pp.pprint(turkey.decode_data(msg)) for msg in turkey.sublisten()]
+    [pp.pprint(pigeon.pigeon.decode_data(msg)) for msg in ear.sublisten()]
 
 if __name__ == '__main__':
     main()
