@@ -8,7 +8,8 @@ import threading
 import buffer
 import collections
 import statsmodels.tsa as smt
-
+import ast
+import codecs
 
 # does stats on incoming data from redis server
 # and pushes it back on interval
@@ -49,18 +50,19 @@ class census:
         all_mov_avg = {}
         for cap in num_msg:
             queue = collections.deque([], cap)
-            [queue.append(pigeon.pigeon.decode_data(item)) for item in msgs]
+            [queue.append(self.decode_data(item)) for item in msgs]
             prices = pd.DataFrame(list(queue))
             avg_price = prices['price'].apply(float).mean()
             last_time = queue[-1]['time']
-            all_mov_avg[f'{cap}_mavg'] = {'avg':avg_price, 'time':last_time}
+            all_mov_avg[f'{cap}_mavg'] = avg_price
+            all_mov_avg['time'] =last_time
         return all_mov_avg
-
+    # not sure what it does yet; using predbuilt functions
     def autoregression(self, messages, order):
         data = [decode_data(msg) for msg in messages]
         prices = data['price']
         times = data['time']
-        
+        # created the object with proper variables
         stm.arima_model.ARMA(price, order, dates=times)
 
 

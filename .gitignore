@@ -3,3 +3,4 @@ torbor/.elasticbeanstalk/*
 !torbor/.elasticbeanstalk/*.global.yml
 torbor/torbor/secret.py
 env/*
+stream/__pycache__/*

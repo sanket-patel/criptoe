@@ -20,14 +20,14 @@ def main():
     turkey = pigeon.pigeon(sbus=yellowbus)
     turkey.sub(target='schoolbus', key='gdax_btcusd_done')
 
-    turkey.get_stats(['moving_average'], .5, outkey='test', ma_num_msg=10, max_size=100)
+    turkey.get_stats(['moving_average'], .5, outkey='test', ma_num_msg=[10, 20, 30, 40, 50], max_size=100)
 
     ear = pigeon.pigeon(yellowbus)
     ear.sub(target='schoolbus', key='test')
 
 
     pp = pprint.PrettyPrinter(indent=4)
-    [pp.pprint(pigeon.pigeon.decode_data(msg)) for msg in ear.sublisten()]
+    [pp.pprint(census.census.decode_data(msg)) for msg in ear.sublisten()]
 
 if __name__ == '__main__':
     main()
