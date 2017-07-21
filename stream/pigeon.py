@@ -3,7 +3,9 @@ import json
 import psycopg2
 import gdax
 import time
-
+import collections
+import codecs
+import ast
 
 # pigeon acts as a messenger between databases
 # like a carrier pigeon does
@@ -25,7 +27,7 @@ class pigeon(gdax.WebsocketClient):
         self.exchange = exchange
         self.schoolbus = sbus
         self.database = database
-        self.hoagie = self.schoolbus.pubsub()
+        self.hoagie = self.schoolbus.pubsub(ignore_subscribe_messages=True)
 
 
     def on_message(self, msg):
@@ -55,14 +57,23 @@ class pigeon(gdax.WebsocketClient):
         elif target == 'schoolbus':
             self.hoagie.subscribe(key)
 
+    def unsub(self, key=None):
+        self.hoagie.unsubscribe(key)
+
     # retreival functions
     def get_exchange(self):
         return self.exchange
 
     def get_products(self):
-        return ''.join(''.join(self.products).split('-')).lower()
+        if isinstance(self.products, list):
+            return ''.join(''.join(self.products).split('-')).lower()
+        else:
+            return self.products
 
-    def get_pubsub(self):
+    def get_submsg(self):
         return self.hoagie.get_message(ignore_subscribe_messages=True)
+
     def sublisten(self):
         return self.hoagie.listen()
+    def decode_data(self, msg):
+        return ast.literal_eval(codecs.decode(msg['data']))
